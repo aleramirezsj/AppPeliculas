@@ -21,13 +21,11 @@
                     x:Name="SeriesBtn"
                     Text="Series"
                     SemanticProperties.Hint="Counts the number of times you click"
-                    Clicked="MostrarSeries"
                     HorizontalOptions="Center" />
                 <Button
                     x:Name="DocumentalesBtn"
                     Text="Documentales"
                     SemanticProperties.Hint="Counts the number of times you click"
-                    Clicked="MostrarDocumentales"
                     HorizontalOptions="Center" />
             </HorizontalStackLayout>
             <Label

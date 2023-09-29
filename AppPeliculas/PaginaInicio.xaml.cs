@@ -5,15 +5,17 @@ public partial class PaginaInicio : ContentPage
 	public PaginaInicio()
 	{
 		InitializeComponent();
+        DocumentalesBtn.Clicked += MostrarDocumentales;
+
+        SeriesBtn.Clicked += (s, a) =>
+        {
+            ContenidoLbl.Text = "Series con funciones flecha";
+        };
 	}
 	public async void MostrarPeliculas(object sender, EventArgs e)
 	{
         //await DisplayAlert("Peliculas", "Mostrando la lista de peliculas", "OK");
         ContenidoLbl.Text = "Peliculas";
-    }
-    public void MostrarSeries(object sender, EventArgs e)
-    {
-        ContenidoLbl.Text = "Series";
     }
     public void MostrarDocumentales(object sender, EventArgs e)
     {
