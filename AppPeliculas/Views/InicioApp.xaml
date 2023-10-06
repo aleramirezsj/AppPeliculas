@@ -14,14 +14,27 @@
                 <Button
                 x:Name="PeliculasBtn"
                 Text="Obtener Peliculas"
-                SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="GetAllPeliculas"
+                HorizontalOptions="Center" />
+                <Button
+                x:Name="PaginaInicioBtn"
+                Text="Abrir la Página de Inicio"
+                Clicked="AbrirPaginaInicio"
                 HorizontalOptions="Center" />
                 
             </HorizontalStackLayout>
             <CollectionView x:Name="PeliculasCollectionView"
           SelectionMode="Single">
-                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RowDefinitions="*,2*" ColumnDefinitions="*,2*,2*">
+                            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{Binding portada_url}"/>
+                            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding nombre}" FontSize="28"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding genero}"/>
+                            <Label Grid.Row="1" Grid.Column="2" Text="{Binding duracion}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
     </ScrollView>

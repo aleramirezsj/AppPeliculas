@@ -20,13 +20,16 @@
                 <Button
                     x:Name="SeriesBtn"
                     Text="Series"
-                    SemanticProperties.Hint="Counts the number of times you click"
                     HorizontalOptions="Center" />
                 <Button
                     x:Name="DocumentalesBtn"
                     Text="Documentales"
-                    SemanticProperties.Hint="Counts the number of times you click"
                     HorizontalOptions="Center" />
+                <Button
+                    x:Name="VolverBtn"
+                    Text="Volver"
+                    Clicked="CerrarLaVentana"
+                    HorizontalOptions="Center" />       
             </HorizontalStackLayout>
             <Label
                 x:Name="ContenidoLbl"

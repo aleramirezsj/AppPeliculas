@@ -21,4 +21,8 @@ public partial class PaginaInicio : ContentPage
     {
         ContenidoLbl.Text = "Documentales";
     }
+    private async void CerrarLaVentana(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

@@ -1,7 +1,7 @@
 using AppPeliculas.Modelos;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-
+using System.Diagnostics;
 
 namespace AppPeliculas.Views;
 
@@ -25,5 +25,22 @@ public partial class InicioApp : ContentPage
         ObservableCollection<Pelicula> Peliculas = JsonConvert.DeserializeObject<ObservableCollection<Pelicula>>(respuesta);
 
         PeliculasCollectionView.ItemsSource = Peliculas;
+    }
+    protected override void OnAppearing()
+    {
+        Debug.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Se ha cargado la pantalla que muestra la lista de películas");
+    }
+    protected override bool OnBackButtonPressed()
+    {
+        Debug.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> se ha pulsado el botón de atrás");
+        return false;
+    }
+    protected override void OnDisappearing()
+    {
+        Debug.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> se ha cerrado la ventana de la lista de películas"); 
+    }
+    private async void AbrirPaginaInicio(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PaginaInicio());
     }
 }
