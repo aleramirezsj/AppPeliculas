@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppPeliculas.Views.ControlesMaui"
+             Title="ControlesMaui">
+    <VerticalStackLayout>
+        <Label 
+            Text="Controles MAUI"
+            Style="{StaticResource TituloPagina}" />
+        <Label Text="Probamos el control Entry"/>
+        <Entry x:Name="txtNombre" 
+               Placeholder="Ingrese su nombre" 
+               Style="{StaticResource EstiloMiEntry}"></Entry>
+        <Entry x:Name="txtApellido" 
+               Placeholder="Ingrese su apellido" 
+               Style="{StaticResource EstiloMiEntry}"></Entry>
+
+    </VerticalStackLayout>
+</ContentPage>

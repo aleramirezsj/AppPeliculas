@@ -57,6 +57,9 @@
 	  <MauiXaml Update="PaginaInicio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ControlesMaui.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\InicioApp.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

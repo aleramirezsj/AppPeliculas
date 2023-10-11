@@ -15,12 +15,22 @@
                 x:Name="PeliculasBtn"
                 Text="Obtener Peliculas"
                 Clicked="GetAllPeliculas"
-                HorizontalOptions="Center" />
+                Style="{StaticResource EstiloBoton}"
+                />
                 <Button
                 x:Name="PaginaInicioBtn"
                 Text="Abrir la Página de Inicio"
                 Clicked="AbrirPaginaInicio"
-                HorizontalOptions="Center" />
+                Style="{StaticResource  EstiloBotonDestacado}"
+
+                 />
+                <Button
+                x:Name="ControlesMauiBtn"
+                Text="Abrir Controles MAUI"
+                Clicked="AbrirPaginaControlesMAUI"
+                Style="{StaticResource  EstiloBotonDestacado}"
+
+                 />
                 
             </HorizontalStackLayout>
             <CollectionView x:Name="PeliculasCollectionView"
