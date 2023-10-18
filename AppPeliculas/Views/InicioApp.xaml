@@ -31,7 +31,14 @@
                 Style="{StaticResource  EstiloBotonDestacado}"
 
                  />
-                
+
+                <Button
+                x:Name="AgregarPeliculaBtn"
+                Text="Agregar Película"
+                Clicked="AgregarPeliculaBtn_Clicked"
+                Style="{StaticResource  EstiloBotonDestacado}"
+                    />
+
             </HorizontalStackLayout>
             <CollectionView x:Name="PeliculasCollectionView"
           SelectionMode="Single">

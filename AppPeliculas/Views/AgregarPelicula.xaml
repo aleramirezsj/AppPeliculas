@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppPeliculas.Views.AgregarPelicula"
+             Title="AgregarPelicula">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label 
+                Text="AGREGAR PELICULA"
+                FontSize="36"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+        
+            <Label>Nombre:</Label>
+            <Entry x:Name="txtNombre"></Entry>
+        
+            <Label>Genero:</Label>
+            <Entry x:Name="txtGenero"></Entry>
+        
+            <Label>Duración:</Label>
+            <Entry x:Name="txtDuracion" Keyboard="Numeric"></Entry>
+        
+            <Label>Dirección URL del Trailer:</Label>
+            <Entry x:Name="txtTrailerUrl"></Entry>
+        
+            <Label>Sinopsis:</Label>
+            <Editor x:Name="txtSinopsis"></Editor>
+        
+            <Label>URL de la imagen de Portada:</Label>
+            <Entry x:Name="txtPortadaUrl"></Entry>
+
+            <Button x:Name="GuardarBtn" 
+                    Text="Guardar"
+                    Clicked="GuardarBtn_Clicked"
+                    ></Button>
+            <Button x:Name="CancelarBtn" 
+                    Text="Cancelar"
+                    Clicked="CancelarBtn_Clicked"></Button>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

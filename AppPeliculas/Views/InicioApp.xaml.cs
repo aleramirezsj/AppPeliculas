@@ -48,4 +48,9 @@ public partial class InicioApp : ContentPage
     {
         await Navigation.PushAsync(new ControlesMaui());
     }
+
+    private async void AgregarPeliculaBtn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new AgregarPelicula());
+    }
 }

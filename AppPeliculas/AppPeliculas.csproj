@@ -57,6 +57,9 @@
 	  <MauiXaml Update="PaginaInicio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AgregarPelicula.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ControlesMaui.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
