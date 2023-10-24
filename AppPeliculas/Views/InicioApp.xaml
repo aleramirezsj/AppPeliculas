@@ -4,32 +4,36 @@
              x:Class="AppPeliculas.Views.InicioApp"
              Title="InicioApp">
     <ScrollView>
-        <VerticalStackLayout Spacing="20">
+        <VerticalStackLayout Spacing="20" Margin="100,10,100,10">
             <Label 
             Text="AppPeliculas"
             FontSize="32"
             VerticalOptions="Start" 
             HorizontalOptions="Center" />
-            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*">
                 <Button
                 x:Name="PeliculasBtn"
                 Text="Obtener Peliculas"
                 Clicked="GetAllPeliculas"
                 Style="{StaticResource EstiloBoton}"
+                Grid.Row="0"
+                Grid.Column="0"
                 />
                 <Button
                 x:Name="PaginaInicioBtn"
                 Text="Abrir la Página de Inicio"
                 Clicked="AbrirPaginaInicio"
                 Style="{StaticResource  EstiloBotonDestacado}"
-
+                Grid.Row="0"
+                Grid.Column="1"
                  />
                 <Button
                 x:Name="ControlesMauiBtn"
                 Text="Abrir Controles MAUI"
                 Clicked="AbrirPaginaControlesMAUI"
                 Style="{StaticResource  EstiloBotonDestacado}"
-
+                Grid.Row="0"
+                Grid.Column="2"
                  />
 
                 <Button
@@ -37,11 +41,35 @@
                 Text="Agregar Película"
                 Clicked="AgregarPeliculaBtn_Clicked"
                 Style="{StaticResource  EstiloBotonDestacado}"
+                Grid.Row="1"
+                Grid.Column="0"                    
                     />
 
-            </HorizontalStackLayout>
+                <Button
+                x:Name="EliminarPeliculaBtn"
+                Text="Eliminar Película"
+                Clicked="EliminarPeliculaBtn_Clicked"
+                Style="{StaticResource  EstiloBotonDestacado}"
+                Grid.Row="1"
+                Grid.Column="1"                    
+                    />
+
+                <Button
+                x:Name="EditarPeliculaBtn"
+                Text="Editar Película"
+                Clicked="EditarPeliculaBtn_Clicked"
+                Style="{StaticResource  EstiloBotonDestacado}"
+                Grid.Row="1"
+                Grid.Column="2"                    
+                    />
+
+
+            </Grid>
+
+
             <CollectionView x:Name="PeliculasCollectionView"
-          SelectionMode="Single">
+          SelectionMode="Single"
+                            >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid RowDefinitions="*,2*" ColumnDefinitions="*,2*,2*">

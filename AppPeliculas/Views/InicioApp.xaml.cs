@@ -8,12 +8,23 @@ namespace AppPeliculas.Views;
 public partial class InicioApp : ContentPage
 {
     public ObservableCollection<Pelicula> Peliculas { get; set; }
+    Pelicula PeliculaSeleccionada { get; set; }
     public InicioApp()
 	{
 		InitializeComponent();
         Peliculas = new ObservableCollection<Pelicula>();
+        PeliculasCollectionView.SelectionChanged += SeleccionarPelicula;
 	}
-	public async void GetAllPeliculas(object sender, EventArgs e)
+
+    private void SeleccionarPelicula(object sender, SelectionChangedEventArgs e)
+    {
+        if (PeliculasCollectionView.SelectedItem!=null)
+        {
+            PeliculaSeleccionada = (Pelicula)PeliculasCollectionView.SelectedItem;
+        }
+    }
+
+    public async void GetAllPeliculas(object sender, EventArgs e)
 	{
         HttpClient cliente = new HttpClient();
         //configuramos que trabajará con respuestas JSON
@@ -29,6 +40,7 @@ public partial class InicioApp : ContentPage
     protected override void OnAppearing()
     {
         Debug.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Se ha cargado la pantalla que muestra la lista de películas");
+        GetAllPeliculas(this,EventArgs.Empty);
     }
     protected override bool OnBackButtonPressed()
     {
@@ -52,5 +64,43 @@ public partial class InicioApp : ContentPage
     private async void AgregarPeliculaBtn_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new AgregarPelicula());
+    }
+
+    private async void EliminarPeliculaBtn_Clicked(object sender, EventArgs e)
+    {
+        if (PeliculaSeleccionada != null)
+        {
+            bool respuesta=await Application.Current.MainPage.DisplayAlert("Eliminar", $"¿Está seguro que desea borrar la película:{PeliculaSeleccionada.nombre}", "Si","No");
+            if (respuesta)
+            {
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.DefaultRequestHeaders.Add("apikey", "6466d9870b60fc42f4e197bf");
+
+                string urlEliminar = "https://practprof2023-2855.restdb.io/rest/peliculas/"+PeliculaSeleccionada._id;
+
+                var response=await client.DeleteAsync(urlEliminar);
+                if(response.IsSuccessStatusCode)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Eliminar", $"Se ha eliminado la película {PeliculaSeleccionada.nombre} correctamente", "Ok");
+                    GetAllPeliculas(this, EventArgs.Empty);
+                }
+            }
+        }
+        else
+        {
+            await Application.Current.MainPage.DisplayAlert("Eliminar", "Error: debe seleccionar la película que quiere borrar", "ok");
+        }
+    }
+
+    private async void EditarPeliculaBtn_Clicked(object sender, EventArgs e)
+    {
+        if(PeliculaSeleccionada!= null) { 
+            await Navigation.PushAsync(new EditarPelicula(PeliculaSeleccionada));
+        }
+        else
+        {
+            await Application.Current.MainPage.DisplayAlert("Editar", "Error: debe seleccionar la película que quiere editar", "ok");
+}
     }
 }
