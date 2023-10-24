@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppPeliculas.Views.InicioApp"
              Title="InicioApp">
-    <ScrollView>
+    
         <VerticalStackLayout Spacing="20" Margin="100,10,100,10">
             <Label 
             Text="AppPeliculas"
@@ -66,9 +66,9 @@
 
             </Grid>
 
-
+        <ScrollView HeightRequest="250" >
             <CollectionView x:Name="PeliculasCollectionView"
-          SelectionMode="Single"
+          SelectionMode="Single" Visual="FilaSeleccionada"
                             >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -81,6 +81,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </VerticalStackLayout>
+    
 </ContentPage>
