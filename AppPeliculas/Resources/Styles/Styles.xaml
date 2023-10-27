@@ -165,6 +165,8 @@
         <Setter Property="CornerRadius" Value="8" />
     </Style>
 
+    <!---Estilos configuran la fila seleccionada
+    en los collectionview -->
     <Style TargetType="Grid">
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>

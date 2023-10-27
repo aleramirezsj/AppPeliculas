@@ -14,7 +14,7 @@
                 <Button
                 x:Name="PeliculasBtn"
                 Text="Obtener Peliculas"
-                Clicked="GetAllPeliculas"
+                Clicked="PeliculasBtn_Clicked"
                 Style="{StaticResource EstiloBoton}"
                 Grid.Row="0"
                 Grid.Column="0"
@@ -68,7 +68,7 @@
 
         <ScrollView HeightRequest="250" >
             <CollectionView x:Name="PeliculasCollectionView"
-          SelectionMode="Single" Visual="FilaSeleccionada"
+          SelectionMode="Single" 
                             >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

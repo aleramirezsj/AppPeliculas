@@ -26,21 +26,56 @@ public partial class InicioApp : ContentPage
 
     public async void GetAllPeliculas(object sender, EventArgs e)
 	{
-        HttpClient cliente = new HttpClient();
-        //configuramos que trabajará con respuestas JSON
-        cliente.DefaultRequestHeaders.Add("Accept", "application/json");
-        cliente.DefaultRequestHeaders.Add("apikey", "6466d9870b60fc42f4e197bf");
+        try
+        {
+            HttpClient cliente = new HttpClient();
+            //configuramos que trabajará con respuestas JSON
+            cliente.DefaultRequestHeaders.Add("Accept", "application/json");
+            cliente.DefaultRequestHeaders.Add("apikey", "6466d9870b60fc42f4e197bf");
+
+
+            var respuesta = await cliente.GetStringAsync("https://practprof2023-2855.restdb.io/rest/peliculas");
+            Peliculas = JsonConvert.DeserializeObject<ObservableCollection<Pelicula>>(respuesta);
+
+            PeliculasCollectionView.ItemsSource = Peliculas;
+            //if(PeliculaSeleccionada!=null)  SeleccionarPeliculaEnCollectionView();
+        }
+        catch (Exception error)
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "Hubo un error:" + error.Message, "Ok");
+        }
         
-
-        var respuesta = await cliente.GetStringAsync("https://practprof2023-2855.restdb.io/rest/peliculas");
-        ObservableCollection<Pelicula> Peliculas = JsonConvert.DeserializeObject<ObservableCollection<Pelicula>>(respuesta);
-
-        PeliculasCollectionView.ItemsSource = Peliculas;
     }
-    protected override void OnAppearing()
+
+    public void SeleccionarPeliculaEnCollectionView(object sender, EventArgs e)
     {
-        Debug.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Se ha cargado la pantalla que muestra la lista de películas");
-        GetAllPeliculas(this,EventArgs.Empty);
+        //iteramos las peliculas hasta encontrar la coincide con la Pelicula Seleccionada, al encontrarla la utilizaremos para indicar que es el SelectedItem del CollectionView e interrumpiremos la iteración.
+        if (PeliculaSeleccionada != null)
+        {
+            foreach (var pelicula in Peliculas)
+            {
+                if (pelicula._id == PeliculaSeleccionada._id)
+                {
+                    PeliculasCollectionView.SelectedItem = pelicula;
+                    PeliculasCollectionView.ScrollTo(pelicula,null,ScrollToPosition.Center,true);
+                    //PeliculasCollectionView.;
+                    break;
+                }
+            }
+        }
+
+    }
+
+    protected  override void OnAppearing()
+    {
+        base.OnAppearing();
+        NetworkAccess conexionInternet = Connectivity.Current.NetworkAccess;
+        if (conexionInternet == NetworkAccess.Internet)
+        {
+            GetAllPeliculas(this, EventArgs.Empty);
+            SeleccionarPeliculaEnCollectionView(this,EventArgs.Empty);
+        }
+
     }
     protected override bool OnBackButtonPressed()
     {
@@ -102,5 +137,11 @@ public partial class InicioApp : ContentPage
         {
             await Application.Current.MainPage.DisplayAlert("Editar", "Error: debe seleccionar la película que quiere editar", "ok");
 }
+    }
+
+    private void PeliculasBtn_Clicked(object sender, EventArgs e)
+    {
+        //PeliculasCollectionView.
+        //SeleccionarPeliculaEnCollectionView(this,EventArgs.Empty);
     }
 }
