@@ -29,13 +29,8 @@ public partial class InicioApp : ContentPage
 
     public async void GetAllPeliculas(object sender, EventArgs e)
 	{
-
         Peliculas = await repositoryPeliculas.GetAllAsync();
-
         PeliculasCollectionView.ItemsSource = Peliculas;
-            
-        
-        
     }
 
     public void SeleccionarPeliculaEnCollectionView(object sender, EventArgs e)
@@ -99,14 +94,8 @@ public partial class InicioApp : ContentPage
             bool respuesta=await Application.Current.MainPage.DisplayAlert("Eliminar", $"¿Está seguro que desea borrar la película:{PeliculaSeleccionada.nombre}", "Si","No");
             if (respuesta)
             {
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-                client.DefaultRequestHeaders.Add("apikey", "6466d9870b60fc42f4e197bf");
-
-                string urlEliminar = "https://practprof2023-2855.restdb.io/rest/peliculas/"+PeliculaSeleccionada._id;
-
-                var response=await client.DeleteAsync(urlEliminar);
-                if(response.IsSuccessStatusCode)
+                var eliminado=await repositoryPeliculas.RemoveAsync(PeliculaSeleccionada._id);
+                if(eliminado)
                 {
                     await Application.Current.MainPage.DisplayAlert("Eliminar", $"Se ha eliminado la película {PeliculaSeleccionada.nombre} correctamente", "Ok");
                     GetAllPeliculas(this, EventArgs.Empty);

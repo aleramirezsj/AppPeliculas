@@ -34,5 +34,23 @@ namespace AppPeliculas.Repositories
                 return null;
             }
         }
+        public async Task<bool> RemoveAsync(string id)
+        {
+            var response = await client.DeleteAsync($"{urlApi}/{id}");
+            return response.IsSuccessStatusCode;
+        }
+        public async Task<bool> AddAsync(Pelicula pelicula)
+        {
+            var response = await client.PostAsync(urlApi,
+                new StringContent(JsonConvert.SerializeObject(pelicula), Encoding.UTF8, "application/json"));
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> UpdateAsync(Pelicula pelicula)
+        {
+            var response = await client.PutAsync($"{urlApi}/{pelicula._id}",
+                new StringContent(JsonConvert.SerializeObject(pelicula), Encoding.UTF8, "application/json"));
+            return response.IsSuccessStatusCode;
+        }
     }
 }
