@@ -1,4 +1,5 @@
 using AppPeliculas.Modelos;
+using AppPeliculas.Repositories;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -9,6 +10,8 @@ public partial class InicioApp : ContentPage
 {
     public ObservableCollection<Pelicula> Peliculas { get; set; }
     Pelicula PeliculaSeleccionada { get; set; }
+
+    RepositoryPeliculas repositoryPeliculas= new RepositoryPeliculas();
     public InicioApp()
 	{
 		InitializeComponent();
@@ -26,24 +29,12 @@ public partial class InicioApp : ContentPage
 
     public async void GetAllPeliculas(object sender, EventArgs e)
 	{
-        try
-        {
-            HttpClient cliente = new HttpClient();
-            //configuramos que trabajará con respuestas JSON
-            cliente.DefaultRequestHeaders.Add("Accept", "application/json");
-            cliente.DefaultRequestHeaders.Add("apikey", "6466d9870b60fc42f4e197bf");
 
+        Peliculas = await repositoryPeliculas.GetAllAsync();
 
-            var respuesta = await cliente.GetStringAsync("https://practprof2023-2855.restdb.io/rest/peliculas");
-            Peliculas = JsonConvert.DeserializeObject<ObservableCollection<Pelicula>>(respuesta);
-
-            PeliculasCollectionView.ItemsSource = Peliculas;
-            //if(PeliculaSeleccionada!=null)  SeleccionarPeliculaEnCollectionView();
-        }
-        catch (Exception error)
-        {
-            await Application.Current.MainPage.DisplayAlert("Error", "Hubo un error:" + error.Message, "Ok");
-        }
+        PeliculasCollectionView.ItemsSource = Peliculas;
+            
+        
         
     }
 
