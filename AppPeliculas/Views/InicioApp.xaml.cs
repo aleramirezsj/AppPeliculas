@@ -2,33 +2,59 @@ using AppPeliculas.Modelos;
 using AppPeliculas.Repositories;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace AppPeliculas.Views;
 
-public partial class InicioApp : ContentPage
+public partial class InicioApp : ContentPage, INotifyPropertyChanged
 {
     public ObservableCollection<Pelicula> Peliculas { get; set; }
-    Pelicula PeliculaSeleccionada { get; set; }
+    private Pelicula peliculaSeleccionada;
+    public event PropertyChangedEventHandler PropertyChanged;
 
-    RepositoryPeliculas repositoryPeliculas= new RepositoryPeliculas();
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        /*Este código que comprueba si un valor es nulo se puede hacer
+        * con una sola linea con la forma ?.Invoke
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }*/
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public Pelicula PeliculaSeleccionada
+    {
+        get { return peliculaSeleccionada; }
+        set
+        {
+            peliculaSeleccionada = value;
+            OnPropertyChanged(nameof(PeliculaSeleccionada));
+        }
+    }
+
+
+
+    RepositoryPeliculas repositoryPeliculas = new RepositoryPeliculas();
     public InicioApp()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         Peliculas = new ObservableCollection<Pelicula>();
         PeliculasCollectionView.SelectionChanged += SeleccionarPelicula;
-	}
+    }
 
     private void SeleccionarPelicula(object sender, SelectionChangedEventArgs e)
     {
-        if (PeliculasCollectionView.SelectedItem!=null)
+        if (PeliculasCollectionView.SelectedItem != null)
         {
             PeliculaSeleccionada = (Pelicula)PeliculasCollectionView.SelectedItem;
         }
     }
 
-    public async void GetAllPeliculas(object sender, EventArgs e)
-	{
+    public async Task GetAllPeliculas(object sender, EventArgs e)
+    {
         Peliculas = await repositoryPeliculas.GetAllAsync();
         PeliculasCollectionView.ItemsSource = Peliculas;
     }
@@ -43,7 +69,7 @@ public partial class InicioApp : ContentPage
                 if (pelicula._id == PeliculaSeleccionada._id)
                 {
                     PeliculasCollectionView.SelectedItem = pelicula;
-                    PeliculasCollectionView.ScrollTo(pelicula,null,ScrollToPosition.Center,true);
+                    PeliculasCollectionView.ScrollTo(pelicula, null, ScrollToPosition.Center, true);
                     //PeliculasCollectionView.;
                     break;
                 }
@@ -52,14 +78,14 @@ public partial class InicioApp : ContentPage
 
     }
 
-    protected  override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
         NetworkAccess conexionInternet = Connectivity.Current.NetworkAccess;
         if (conexionInternet == NetworkAccess.Internet)
         {
-            GetAllPeliculas(this, EventArgs.Empty);
-            SeleccionarPeliculaEnCollectionView(this,EventArgs.Empty);
+            await GetAllPeliculas(this, EventArgs.Empty);
+            SeleccionarPeliculaEnCollectionView(this, EventArgs.Empty);
         }
 
     }
@@ -70,7 +96,7 @@ public partial class InicioApp : ContentPage
     }
     protected override void OnDisappearing()
     {
-        Debug.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> se ha cerrado la ventana de la lista de películas"); 
+        Debug.Print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> se ha cerrado la ventana de la lista de películas");
     }
     private async void AbrirPaginaInicio(object sender, EventArgs e)
     {
@@ -91,11 +117,11 @@ public partial class InicioApp : ContentPage
     {
         if (PeliculaSeleccionada != null)
         {
-            bool respuesta=await Application.Current.MainPage.DisplayAlert("Eliminar", $"¿Está seguro que desea borrar la película:{PeliculaSeleccionada.nombre}", "Si","No");
+            bool respuesta = await Application.Current.MainPage.DisplayAlert("Eliminar", $"¿Está seguro que desea borrar la película:{PeliculaSeleccionada.nombre}", "Si", "No");
             if (respuesta)
             {
-                var eliminado=await repositoryPeliculas.RemoveAsync(PeliculaSeleccionada._id);
-                if(eliminado)
+                var eliminado = await repositoryPeliculas.RemoveAsync(PeliculaSeleccionada._id);
+                if (eliminado)
                 {
                     await Application.Current.MainPage.DisplayAlert("Eliminar", $"Se ha eliminado la película {PeliculaSeleccionada.nombre} correctamente", "Ok");
                     GetAllPeliculas(this, EventArgs.Empty);
@@ -110,18 +136,31 @@ public partial class InicioApp : ContentPage
 
     private async void EditarPeliculaBtn_Clicked(object sender, EventArgs e)
     {
-        if(PeliculaSeleccionada!= null) { 
+        if (PeliculaSeleccionada != null)
+        {
             await Navigation.PushAsync(new EditarPelicula(PeliculaSeleccionada));
         }
         else
         {
             await Application.Current.MainPage.DisplayAlert("Editar", "Error: debe seleccionar la película que quiere editar", "ok");
-}
+        }
     }
 
     private void PeliculasBtn_Clicked(object sender, EventArgs e)
     {
         //PeliculasCollectionView.
         //SeleccionarPeliculaEnCollectionView(this,EventArgs.Empty);
+    }
+
+    private async void VerTrailerBtn_Clicked(object sender, EventArgs e)
+    {
+        if (PeliculaSeleccionada != null)
+        {
+            await Navigation.PushAsync(new TrailerPelicula());
+        }
+        else
+        {
+            await Application.Current.MainPage.DisplayAlert("Ver trailer", "Error: debe seleccionar la película que quiere ver", "ok");
+        }
     }
 }
