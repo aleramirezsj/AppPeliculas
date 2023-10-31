@@ -156,7 +156,6 @@ public partial class InicioApp : ContentPage, INotifyPropertyChanged
     {
         if (PeliculaSeleccionada != null)
         {
-            await Navigation.PushAsync(new TrailerPelicula());
         }
         else
         {
