@@ -1,9 +1,14 @@
 namespace AppPeliculas.Views;
 
-public partial class TrailerPelicula : ContentPage
+
+namespace AppPeliculas.Views
 {
-	public TrailerPelicula()
-	{
-		InitializeComponent();
-	}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class TrailerPelicula : ContentPage
+    {
+        public TrailerPelicula()
+        {
+            InitializeComponent();
+        }
+    }
 }
