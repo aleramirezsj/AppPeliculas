@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppPeliculas.Views.InicioApp"
              Title="InicioApp">
-    
+
         <VerticalStackLayout Spacing="20" Margin="100,10,100,10">
             <Label 
             Text="AppPeliculas"
@@ -12,9 +12,9 @@
             HorizontalOptions="Center" />
             <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*">
                 <Button
-                x:Name="PeliculasBtn"
-                Text="Obtener Peliculas"
-                Clicked="PeliculasBtn_Clicked"
+                x:Name="VerTrailerBtn"
+                Text="Ver trailer"
+                Clicked="VerTrailerBtn_Clicked"
                 Style="{StaticResource EstiloBoton}"
                 Grid.Row="0"
                 Grid.Column="0"
@@ -69,7 +69,8 @@
         <ScrollView HeightRequest="250" >
             <CollectionView x:Name="PeliculasCollectionView"
           SelectionMode="Single" 
-                            >
+          SelectedItem="{Binding PeliculaSeleccionada}">
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid RowDefinitions="*,2*" ColumnDefinitions="*,2*,2*">
