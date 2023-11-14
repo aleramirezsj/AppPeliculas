@@ -1,15 +1,16 @@
 ﻿using AppPeliculas.Views;
+using Firebase.Auth;
 using System.Diagnostics;
 
 namespace AppPeliculas;
 
 public partial class App : Application
 {
-	public App()
+	public App(FirebaseAuthClient firebaseAuthClient)
 	{
 		InitializeComponent();
 
-		MainPage = new NavigationPage(new InicioApp());
+		MainPage = new NavigationPage(new IniciarSesion(firebaseAuthClient));
 
 		
 	}

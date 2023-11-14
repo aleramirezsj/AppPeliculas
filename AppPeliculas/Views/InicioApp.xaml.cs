@@ -8,22 +8,12 @@ using System.Runtime.CompilerServices;
 
 namespace AppPeliculas.Views;
 
-public partial class InicioApp : ContentPage, INotifyPropertyChanged
+public partial class InicioApp : ContentPage
 {
     public ObservableCollection<Pelicula> Peliculas { get; set; }
     private Pelicula peliculaSeleccionada;
-    public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        /*Este código que comprueba si un valor es nulo se puede hacer
-        * con una sola linea con la forma ?.Invoke
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }*/
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+
 
     public Pelicula PeliculaSeleccionada
     {
@@ -156,7 +146,7 @@ public partial class InicioApp : ContentPage, INotifyPropertyChanged
     {
         if (PeliculaSeleccionada != null)
         {
-            await Navigation.PushAsync(new TrailerPelicula());
+            await Navigation.PushAsync(new TrailerPelicula(PeliculaSeleccionada.trailer_url));
         }
         else
         {

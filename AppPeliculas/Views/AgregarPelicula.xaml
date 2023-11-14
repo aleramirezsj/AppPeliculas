@@ -4,10 +4,10 @@
              x:Class="AppPeliculas.Views.AgregarPelicula"
              Title="AgregarPelicula">
     <ScrollView>
-        <VerticalStackLayout HorizontalOptions="Center">
+        <VerticalStackLayout  Margin="20">
             <Label 
                 Text="AGREGAR PELICULA"
-                FontSize="36"
+                FontSize="Medium"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
         

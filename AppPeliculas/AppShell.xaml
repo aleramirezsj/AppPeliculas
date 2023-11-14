@@ -3,12 +3,35 @@
     x:Class="AppPeliculas.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:AppPeliculas.Views"
     xmlns:local="clr-namespace:AppPeliculas"
-    Shell.FlyoutBehavior="Disabled">
+    FlyoutBackgroundImage="fondo.png"
+    FlyoutBackgroundImageAspect="AspectFill"
+    FlyoutHeaderBehavior="CollapseOnScroll">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.FlyoutHeader>
+        <views:EncabezadoMenu/>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+        <views:PiePaginaMenu/>
+    </Shell.FlyoutFooter>
+
+    <FlyoutItem Route="nuestra_app"
+                FlyoutDisplayOptions="AsMultipleItems">
+        
+        <ShellContent
+            Title="Indice"
+            ContentTemplate="{DataTemplate views:InicioApp}"
+            Route="indice" />
+        <ShellContent
+            Title="Agregar película"
+            ContentTemplate="{DataTemplate views:AgregarPelicula}"
+            Route="agregar_pelicula" />
+    </FlyoutItem>
+    <MenuItem Text="Cerrar sesión"
+              IconImageSource="exit.png"
+              Clicked="MenuItem_Clicked"
+              />
 
 </Shell>
